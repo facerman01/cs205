@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Build;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
-    private final Game game = new Game(this::sendNotification, this::useCanvas);
+    private final Game game = new Game(this::useCanvas);
 
     private GameThread gameThread;
 
@@ -24,15 +25,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
         setKeepScreenOn(true);
         getHolder().addCallback(this);
-        setFocusable(View.FOCUSABLE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setFocusable(View.FOCUSABLE);
+        }
         setOnTouchListener((view, event) -> {
-            game.click(event);
+            view.setOnTouchListener(new SwipeListener(this.getContext()));
             return true;
         });
-    }
-
-    private void sendNotification() {
-        NotificationPublisher.showNotification(getContext());
     }
 
     private boolean useCanvas(final Consumer<Canvas> onDraw) {
