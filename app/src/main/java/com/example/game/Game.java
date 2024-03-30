@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 
 public class Game {
     private final Object mutex = new Object();
-    private boolean showFps = false;
+//    private boolean showFps = false;
     private final Paint fpsText = new Paint();
     private final static int targetFps = 30;
     private final ElapsedTimer elapsedTimer = new ElapsedTimer();
@@ -79,25 +79,29 @@ public class Game {
         if (canvas == null) {
             return;
         }
-        final float radius = Math.min(width, height) * 0.40f;
-        final float centerWidth = width / 2.0f;
-        final float centerHeight = height / 2.0f;
+//        final float radius = Math.min(width, height) * 0.40f;
+//        final float centerWidth = width / 2.0f;
+//        final float centerHeight = height / 2.0f;
         // Draw the background.
         {
             canvas.drawColor(Color.BLACK);
+//            Paint paint = new Paint();
+//            paint.setColor(Color.BLACK);
+//            canvas.drawText("Hello", 100, 100, paint);
             synchronized (mutex) {
                 //draw background...?
             }
         }
+
         // Draw the frame-rate counter.
         {
-            if (showFps) {
+//            if (showFps) {
                 canvas.drawText(
                         String.format("%.2f", avgFps),
                         10.0f, 30.0f,
                         fpsText
                 );
-            }
+//            }
         }
     }
 

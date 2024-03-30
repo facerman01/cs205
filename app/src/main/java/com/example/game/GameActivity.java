@@ -11,8 +11,8 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        hideStatusBar();
         setContentView(new GameView(this));
+        hideStatusBar();
     }
 
     private void hideStatusBar() {
